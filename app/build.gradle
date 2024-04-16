@@ -42,8 +42,12 @@ dependencies {
     implementation libs.androidx.constraintlayout
     //Animaciones
     implementation "com.airbnb.android:lottie:4.2.1"
-    //Comunicacion Firebase
+    //Comunicacion Firebase json Android
     implementation platform('com.google.firebase:firebase-bom:32.8.1')
+    //Firebase autentifiacion y base de datos
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-database'
+
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
