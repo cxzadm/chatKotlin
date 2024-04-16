@@ -5,4 +5,11 @@
     <!-- Inicio -->
     <string name="Btn_ir_registros">Registrarme</string>
     <string name="Btn_ir_logeo">Ingresar</string>
+
+    <!-- Registro -->
+    <string name="R_Et_nombre_usuario">Nombre de usuario</string>
+    <string name="R_Et_email">Correo electrónico</string>
+    <string name="R_Et_password">Contraseña</string>
+    <string name="R_Et_r_password">Repita su contraseña</string>
+    <string name="Btn_registrar">Registrar</string>
 </resources>
