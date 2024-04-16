@@ -12,7 +12,7 @@ class SplashScreen : AppCompatActivity() {
         mostrarBienvenida()
     }
 
-    private fun mostrarBienvenida() {
+    fun mostrarBienvenida() {
         object : CountDownTimer(3000, 1000) {
             override fun onTick(p0: Long) {
                 // En caso de que necesites hacer algo en cada tick del temporizador
