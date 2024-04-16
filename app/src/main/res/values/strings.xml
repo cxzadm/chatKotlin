@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Chat Kotlin</string>
-    <string name="Nombre_desarrollador" >Proyecto Apps Bryam C</string>
+    <string name="Nombre_desarrollador">Proyecto Apps Bryam C</string>
+
+    <!-- Inicio -->
+    <string name="Btn_ir_registros">Registrarme</string>
+    <string name="Btn_ir_logeo">Ingresar</string>
 </resources>

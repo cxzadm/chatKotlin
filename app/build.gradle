@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id 'com.google.gms.google-services' //config firebase
 }
 
 android {
@@ -41,7 +42,8 @@ dependencies {
     implementation libs.androidx.constraintlayout
     //Animaciones
     implementation "com.airbnb.android:lottie:4.2.1"
-
+    //Comunicacion Firebase
+    implementation platform('com.google.firebase:firebase-bom:32.8.1')
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit

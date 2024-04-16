@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "563532665759",
+    "project_id": "chatapp-8e61a",
+    "storage_bucket": "chatapp-8e61a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563532665759:android:68ff7a999042f6b60423aa",
+        "android_client_info": {
+          "package_name": "com.bryam.appchatkotlin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9xVGJmA6HvjAl1TfMyJ3FFNJ6MqviG-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
