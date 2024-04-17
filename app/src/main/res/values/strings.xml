@@ -35,4 +35,8 @@
     <string name="Btn_enviar_correo">Enviar</string>
 
 
+
+    <string name="Btn_login_google">Ingresar con Google</string>
+
+
 </resources>

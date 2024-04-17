@@ -76,22 +76,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun LoginUsuario(email: String, password: String) {
-        progressDialog.setMessage("Espere por favor")
-        progressDialog.show()
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener{task->
                 if (task.isSuccessful){
-                    progressDialog.dismiss()
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     Toast.makeText(applicationContext, "Ha iniciado sesión", Toast.LENGTH_SHORT).show()
                     startActivity(intent)
                     finish()
                 }else{
-                    progressDialog.dismiss()
                     Toast.makeText(applicationContext, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
                 }
             }.addOnFailureListener{e->
-                progressDialog.dismiss()
                 Toast.makeText(applicationContext, "{${e.message}}", Toast.LENGTH_SHORT).show()
             }
     }
