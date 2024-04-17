@@ -12,4 +12,27 @@
     <string name="R_Et_password">Contraseña</string>
     <string name="R_Et_r_password">Repita su contraseña</string>
     <string name="Btn_registrar">Registrar</string>
+
+    <!-- Menu principal -->
+    <string name="menu_principal">Menú principal</string>
+    <string name="menu_perfil">Perfil de usuario</string>
+    <string name="menu_acerca_de">Acerca de</string>
+    <string name="menu_salir">Cerrar sesión</string>
+
+
+    <string name="Nombre_usuario">Nombre de usuario</string>
+
+
+    <string name="L_Et_email">Correo electrónico</string>
+    <string name="L_Et_password">Contraseña</string>
+    <string name="Txt_olvide_password">Olvidé mi contraseña</string>
+    <string name="Btn_login">Ingresar</string>
+    <string name="TXT_no_cuenta">¿No tienes una cuenta?</string>
+    <string name="TXT_ir_registro">Registrarme</string>
+
+
+    <string name="Txt_instrucciones">Ingrese su correo electrónico registrado para recibir las instrucciones para reestablecer su contraseña</string>
+    <string name="Btn_enviar_correo">Enviar</string>
+
+
 </resources>
