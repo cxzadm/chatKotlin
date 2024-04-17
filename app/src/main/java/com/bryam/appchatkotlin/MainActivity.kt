@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bryam.appchatkotlin.Fragmentos.FragmentoChats
 import com.bryam.appchatkotlin.Fragmentos.FragmentoUsuarios
+import com.bryam.appchatkotlin.Modelo.Usuario
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         InicializarComponentes()
+        ObtenerDato()
 
     }
 
@@ -80,6 +82,22 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = viewpagerAdapter
         tabLayout.setupWithViewPager(viewPager)
 
+    }
+    fun ObtenerDato(){
+        reference!!.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()){
+                    val usuario : Usuario? = snapshot.getValue(Usuario::class.java)
+                    nombre_usuario.text = usuario!!.getN_Usuario()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

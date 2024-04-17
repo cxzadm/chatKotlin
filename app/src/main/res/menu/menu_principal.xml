@@ -4,7 +4,8 @@
 
     <item
         android:title="@string/menu_principal"
-        app:showAsAction="always">
+        app:showAsAction="always"
+        android:icon="@drawable/ic_mostrar_opciones">
 
         <menu>
 
