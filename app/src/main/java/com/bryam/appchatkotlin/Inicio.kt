@@ -17,7 +17,6 @@ class Inicio : AppCompatActivity() {
     var firebaseUser : FirebaseUser?=null
     private lateinit var auth : FirebaseAuth
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -31,14 +30,12 @@ class Inicio : AppCompatActivity() {
             Toast.makeText(applicationContext, "Registros", Toast.LENGTH_SHORT).show()
             startActivity(intent)
         }
-
         Btn_ir_logeo.setOnClickListener {
             val intent = Intent(this@Inicio, LoginActivity::class.java)
-            //Toast.makeText(applicationContext, "Login", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "Login", Toast.LENGTH_SHORT).show()
             startActivity(intent)
         }
     }
-
     private fun ComprobarSesion(){
         firebaseUser = FirebaseAuth.getInstance().currentUser
         if (firebaseUser!=null){
@@ -48,7 +45,6 @@ class Inicio : AppCompatActivity() {
             finish()
         }
     }
-
     override fun onStart() {
         ComprobarSesion()
         super.onStart()
