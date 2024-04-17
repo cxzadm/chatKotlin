@@ -72,6 +72,9 @@
     <string name="Btn_abrir_galeria">Galería</string>
     <string name="Btn_abrir_camara">Cámara</string>
 
+    <!--Chat-->
+    <string name="N_usuario_chat">Nombre de usuario</string>
+    <string name="Et_mensaje">Escriba un mensaje</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
