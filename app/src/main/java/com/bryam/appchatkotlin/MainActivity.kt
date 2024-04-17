@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager
 import com.bryam.appchatkotlin.Fragmentos.FragmentoChats
 import com.bryam.appchatkotlin.Fragmentos.FragmentoUsuarios
 import com.bryam.appchatkotlin.Modelo.Usuario
+import com.bryam.appchatkotlin.Perfil.PerfilActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -108,6 +109,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId){
+            R.id.menu_perfil->{
+                val intent = Intent(applicationContext, PerfilActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.menu_acerca_de->{
+                return true
+            }
             R.id.menu_salir->{
                 FirebaseAuth.getInstance().signOut()
                 val intent = Intent(this@MainActivity, Inicio::class.java)
