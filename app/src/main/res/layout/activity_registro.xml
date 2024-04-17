@@ -15,7 +15,6 @@
         android:padding="10dp">
 
         <ImageView
-            android:src="@drawable/registro"
             android:layout_width="80dp"
             android:layout_height="80dp"/>
 
@@ -103,7 +102,6 @@
         <Button
             android:id="@+id/Btn_registrar"
             android:text="@string/Btn_registrar"
-            app:icon="@drawable/registrar_usuario"
             android:layout_marginTop="10dp"
             android:layout_width="200dp"
             android:layout_height="wrap_content"/>

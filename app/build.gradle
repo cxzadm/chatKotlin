@@ -47,6 +47,8 @@ dependencies {
     //Firebase autentifiacion y base de datos
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-database'
+    //Diseño de material google
+    implementation 'com.google.android.material:material:1.8.0'
 
 
     testImplementation libs.junit

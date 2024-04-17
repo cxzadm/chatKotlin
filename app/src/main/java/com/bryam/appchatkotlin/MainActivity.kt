@@ -9,7 +9,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.bryam.appchatkotlin.Fragmentos.FragmentoChats
+import com.bryam.appchatkotlin.Fragmentos.FragmentoUsuarios
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -33,13 +38,48 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //Integracion de TabLayout fragmentos
+    class ViewPagerAdapter(fragmentManager : FragmentManager): FragmentPagerAdapter(fragmentManager) {
+
+        private val listaFragmentos : MutableList<Fragment> = ArrayList()
+        private val listaTitulos : MutableList<String> = ArrayList()
+        //Tamaño de la lista de fragmentos
+        override fun getCount(): Int {
+            return listaFragmentos.size
+        }
+        //Posicion de la lista de fragmentos
+        override fun getItem(position: Int): Fragment {
+            return listaFragmentos[position]
+        }
+        //Metodo cambiar Tags
+        override fun getPageTitle(position: Int): CharSequence? {
+            return listaTitulos[position]
+        }
+        //Llenado de Listas
+        fun addItem(fragment: Fragment, titulo:String){
+            listaFragmentos.add(fragment)
+            listaTitulos.add(titulo)
+        }
+    }
     fun InicializarComponentes(){
         val toolbar : Toolbar = findViewById(R.id.toolbarMain)
         setSupportActionBar(toolbar)
         supportActionBar!!.title = ""
+
         firebaseUser = FirebaseAuth.getInstance().currentUser
         reference = FirebaseDatabase.getInstance().reference.child("Usuarios").child(firebaseUser!!.uid)
         nombre_usuario = findViewById(R.id.Nombre_usuario)
+
+        val tabLayout : TabLayout = findViewById(R.id.TabLayoutMain)
+        val viewPager : ViewPager = findViewById(R.id.ViewPagerMain)
+        val viewpagerAdapter = ViewPagerAdapter(supportFragmentManager)
+
+        viewpagerAdapter.addItem(FragmentoUsuarios(),"Usuarios")
+        viewpagerAdapter.addItem(FragmentoChats(), "Chats")
+
+        viewPager.adapter = viewpagerAdapter
+        tabLayout.setupWithViewPager(viewPager)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
