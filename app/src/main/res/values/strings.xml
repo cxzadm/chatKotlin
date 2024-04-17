@@ -40,7 +40,7 @@
     <string name="Txt_ultimo_mensaje"></string>
 
 
-
+    <string name="Et_buscar_usuario">Buscar usuario</string>
 
     <string name="Btn_login_google">Ingresar con Google</string>
     <!-- TODO: Remove or change this placeholder text -->

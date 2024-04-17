@@ -1,15 +1,25 @@
 package com.bryam.appchatkotlin.Adaptador
 
+
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.bryam.appchatkotlin.Chat.MensajesActivity
 import com.bryam.appchatkotlin.Modelo.Usuario
 import com.bryam.appchatkotlin.R
-import com.bumptech.glide.Glide
+
 
 class AdaptadorUsuario (context : Context, listaUsuarios : List<Usuario>, chatLeido : Boolean) : RecyclerView.Adapter<AdaptadorUsuario.ViewHolder?>(){
 
@@ -52,6 +62,51 @@ class AdaptadorUsuario (context : Context, listaUsuarios : List<Usuario>, chatLe
         holder.nombre_usuario.text = usuario.getN_Usuario()
         //holder.email_usuario.text = usuario.getEmail()
         Glide.with(context).load(usuario.getImagen()).placeholder(R.drawable.ic_item_usuario).into(holder.imagen_usuario)
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, MensajesActivity::class.java)
+            //Enviamos el uid del usuario seleccionado
+            intent.putExtra("uid_usuario", usuario.getUid())
+            //Toast.makeText(context, "El usuario seleccionado es: "+usuario.getN_Usuario(),Toast.LENGTH_SHORT).show()
+            context.startActivity(intent)
+        }
+
+        if (chatLeido){
+            ObtenerUltimoMensaje(usuario.getUid(), holder.Txt_ultimo_mensaje)
+        }else{
+            holder.Txt_ultimo_mensaje.visibility = View.GONE
+        }
+
+
+        if (chatLeido){
+            if (usuario.getEstado() == "online"){
+                holder.imagen_online.visibility = View.VISIBLE
+                holder.imagen_offline.visibility = View.GONE
+            }else{
+                holder.imagen_online.visibility = View.GONE
+                holder.imagen_offline.visibility = View.VISIBLE
+            }
+        }
+        else{
+            holder.imagen_online.visibility = View.GONE
+            holder.imagen_offline.visibility = View.GONE
+        }
+    }
+
+    private fun ObtenerUltimoMensaje(ChatUsuarioUid: String?, txtUltimoMensaje: TextView) {
+        ultimoMensaje = "defaultMensaje"
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        val reference = FirebaseDatabase.getInstance().reference.child("Chats")
+        reference.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
     }
 
     override fun getItemCount(): Int {
