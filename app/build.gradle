@@ -53,6 +53,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     //Gestion storage firebase
     implementation 'com.google.firebase:firebase-storage'
+    //Gestion inicio de secion google
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
 
 
 

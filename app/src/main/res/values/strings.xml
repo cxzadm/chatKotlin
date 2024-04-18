@@ -3,7 +3,7 @@
     <string name="Nombre_desarrollador">Proyecto Apps Bryam C</string>
 
     <!-- Inicio -->
-    <string name="Btn_ir_registros">Registrarme</string>
+
     <string name="Btn_ir_logeo">Ingresar</string>
 
     <!-- Registro -->
@@ -78,6 +78,10 @@
 
     <!--Item chat-->
     <string name="TXT_ver_mensaje">Hola, ¿Cómo estás?</string>
+
+
+    <string name="default_web_client_id">AIzaSyD9xVGJmA6HvjAl1TfMyJ3FFNJ6MqviG</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
