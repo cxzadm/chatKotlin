@@ -7,7 +7,7 @@
         android:topLeftRadius="0dp"/>
 
     <solid
-        android:color="#D6EAF8">
+        android:color="@android:color/white">
 
     </solid>
 
