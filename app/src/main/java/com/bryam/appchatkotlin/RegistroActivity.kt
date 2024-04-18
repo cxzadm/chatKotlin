@@ -1,5 +1,6 @@
 package com.bryam.appchatkotlin
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -21,6 +22,8 @@ class RegistroActivity : AppCompatActivity() {
 
     private lateinit var auth : FirebaseAuth
     private lateinit var reference : DatabaseReference
+
+    private lateinit var progressDialog : ProgressDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,6 +43,11 @@ class RegistroActivity : AppCompatActivity() {
         R_Et_r_password = findViewById(R.id.R_Et_r_password)
         Btn_registrar = findViewById(R.id.Btn_registrar)
         auth = FirebaseAuth.getInstance()
+
+        //Configurar
+        progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Registrando información")
+        progressDialog.setCanceledOnTouchOutside(false)
 
 
     }
@@ -69,9 +77,12 @@ class RegistroActivity : AppCompatActivity() {
         }
     }
     private fun RegistrarUsuario(email: String, password: String) {
+        progressDialog.setMessage("Espere por favor")
+        progressDialog.show()
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener{task->
                 if (task.isSuccessful){
+                    progressDialog.dismiss()
                     var uid : String = ""
                     uid = auth.currentUser!!.uid
                     reference = FirebaseDatabase.getInstance().reference.child("Usuarios").child(uid)
@@ -109,10 +120,12 @@ class RegistroActivity : AppCompatActivity() {
                             Toast.makeText(applicationContext, "${e.message}", Toast.LENGTH_SHORT).show()
                         }
                 }else{
+                    progressDialog.dismiss()
                     Toast.makeText(applicationContext, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener{e->
+                progressDialog.dismiss()
                 Toast.makeText(applicationContext, "${e.message}", Toast.LENGTH_SHORT).show()
             }
 

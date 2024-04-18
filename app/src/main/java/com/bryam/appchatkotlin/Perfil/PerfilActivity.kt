@@ -1,5 +1,6 @@
 package com.bryam.appchatkotlin.Perfil
 
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -23,6 +25,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.hbb20.CountryCodePicker
 
 class PerfilActivity : AppCompatActivity() {
 
@@ -48,12 +51,15 @@ class PerfilActivity : AppCompatActivity() {
     private var codigoTel = ""
     private var numeroTel = ""
     private var codigo_numero_Tel = ""
+    private lateinit var progressDialog : ProgressDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_perfil)
         InicializarVariables()
         ObtenerDatos()
+        EstadoCuenta()
 
         Btn_guardar.setOnClickListener {
             ActualizarInformacion()
@@ -62,6 +68,20 @@ class PerfilActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, EditarImagenPerfil::class.java)
             startActivity(intent)
         }
+        Editar_Telefono.setOnClickListener {
+            EstablecerNumTel()
+        }
+        Btn_verificar.setOnClickListener {
+            if (user!!.isEmailVerified){
+                //Usuario verificado
+                //Toast.makeText(applicationContext, "Usuario verificado", Toast.LENGTH_SHORT).show()
+                CuentaVerificada()
+            }else{
+                //Usuario no está verificado
+                ConfirmarEnvio()
+            }
+        }
+
     }
     private fun InicializarVariables(){
         P_imagen = findViewById(R.id.P_imagen)
@@ -80,10 +100,48 @@ class PerfilActivity : AppCompatActivity() {
         Btn_verificar = findViewById(R.id.Btn_verificar)
 
 
+        progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Espere por favor")
+        progressDialog.setCanceledOnTouchOutside(false)
 
         user = FirebaseAuth.getInstance().currentUser
         reference = FirebaseDatabase.getInstance().reference.child("Usuarios").child(user!!.uid)
 
+    }
+
+    private fun EstablecerNumTel() {
+
+        /*Declarar las vistas del CD*/
+        val Establecer_Telefono : EditText
+        val SelectorCodigoPais : CountryCodePicker
+        val Btn_aceptar_Telefono : MaterialButton
+
+        val dialog = Dialog(this@PerfilActivity)
+
+        /*Realizar la conexión con el diseño*/
+        dialog.setContentView(R.layout.cuadro_d_establecer_tel)
+
+        /*Inicializar las vistas*/
+        Establecer_Telefono = dialog.findViewById(R.id.Establecer_Telefono)
+        SelectorCodigoPais = dialog.findViewById(R.id.SelectorCodigoPais)
+        Btn_aceptar_Telefono = dialog.findViewById(R.id.Btn_aceptar_Telefono)
+
+        /*Asignar un evento al botón*/
+        Btn_aceptar_Telefono.setOnClickListener {
+            codigoTel = SelectorCodigoPais.selectedCountryCodeWithPlus
+            numeroTel = Establecer_Telefono.text.toString().trim()
+            codigo_numero_Tel = codigoTel + numeroTel
+            if (numeroTel.isEmpty()){
+                Toast.makeText(applicationContext,"Ingrese un número telefónico", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }else{
+                P_telefono.text = codigo_numero_Tel
+                dialog.dismiss()
+            }
+        }
+
+        dialog.show()
+        dialog.setCanceledOnTouchOutside(false)
     }
     private fun ObtenerDatos(){
         reference!!.addValueEventListener(object : ValueEventListener {
@@ -152,6 +210,61 @@ class PerfilActivity : AppCompatActivity() {
         }
 
 
+    }
+    private fun CuentaVerificada(){
+
+        val BtnEntendidoVerificado : MaterialButton
+        val dialog = Dialog(this@PerfilActivity)
+
+        dialog.setContentView(R.layout.cuadro_d_cuenta_verificada)
+
+        BtnEntendidoVerificado = dialog.findViewById(R.id.BtnEntendidoVerificado)
+        BtnEntendidoVerificado.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.setCanceledOnTouchOutside(false)
+
+    }
+    private fun ConfirmarEnvio() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Verificar cuenta")
+            .setMessage("¿Estás seguro(a) de enviar instrucciones de verificación a su correo electrónico? ${user!!.email}")
+            .setPositiveButton("Enviar"){d,e ->
+                EnviarEmailConfirmacion()
+
+            }
+            .setNegativeButton("Cancelar"){d,e ->
+                d.dismiss()
+            }
+            .show()
+    }
+
+    private fun EnviarEmailConfirmacion() {
+        progressDialog.setMessage("Enviando instrucciones de verificación a su correo electrónico ${user!!.email}")
+        progressDialog.show()
+
+        user!!.sendEmailVerification()
+            .addOnSuccessListener {
+                //Envio fue exitoso
+                progressDialog.dismiss()
+                Toast.makeText(applicationContext, "Instrucciones enviadas, revise la bandeja de su correo ${user!!.email}", Toast.LENGTH_SHORT).show()
+
+            }
+            .addOnFailureListener { e->
+                //Envio no fue exitoso
+                progressDialog.dismiss()
+                Toast.makeText(applicationContext, "La operación falló debido a ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun EstadoCuenta(){
+        if (user!!.isEmailVerified){
+            Btn_verificar.text = "Verificado"
+        }else{
+            Btn_verificar.text = "No verificado"
+        }
     }
 
 }

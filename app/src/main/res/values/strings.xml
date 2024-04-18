@@ -82,6 +82,13 @@
 
     <string name="default_web_client_id">AIzaSyD9xVGJmA6HvjAl1TfMyJ3FFNJ6MqviG</string>
 
+    <!--Cd - Establecer teléfono-->
+    <string name="Establecer_Telefono">Escriba su número</string>
+    <string name="Btn_aceptar_Telefono">Aceptar</string>
+
+    <!--Cd - Cuenta verificada-->
+    <string name="CuentaVerificadaTXT">Cuenta verificada</string>
+    <string name="BtnEntendidoVerificado">Entendido</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
