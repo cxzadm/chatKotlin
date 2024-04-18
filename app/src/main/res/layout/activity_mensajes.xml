@@ -13,7 +13,7 @@
         android:id="@+id/toolbar_chat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/whitegray">
+        android:background="#FFFF">
 
         <ImageView
             android:id="@+id/imagen_perfil_chat"

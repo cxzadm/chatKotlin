@@ -21,6 +21,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bryam.appchatkotlin.Adaptador.AdaptadorChat
+import com.bryam.appchatkotlin.Modelo.Chat
 import com.bryam.appchatkotlin.Modelo.Usuario
 import com.bryam.appchatkotlin.R
 import com.bumptech.glide.Glide
@@ -49,6 +51,8 @@ class MensajesActivity : AppCompatActivity() {
     private var imagenUri : Uri?= null
 
     lateinit var RV_chats : RecyclerView
+    var chatAdapter : AdaptadorChat?= null
+    var chatList : List<Chat> ?= null
 
 
     var reference : DatabaseReference?= null
@@ -163,7 +167,7 @@ class MensajesActivity : AppCompatActivity() {
                     .placeholder(R.drawable.ic_item_usuario)
                     .into(imagen_perfil_chat)
 
-                //RecuperarMensajes(firebaseUser!!.uid, uid_usuario_seleccionado, usuario.getImagen())
+                RecuperarMensajes(firebaseUser!!.uid, uid_usuario_seleccionado, usuario.getImagen())
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -172,6 +176,34 @@ class MensajesActivity : AppCompatActivity() {
 
         })
     }
+
+    private fun RecuperarMensajes(EmisorUid: String, ReceptorUid: String, ReceptorImagen: String?) {
+        chatList = ArrayList()
+        val reference = FirebaseDatabase.getInstance().reference.child("Chats")
+        reference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                (chatList as ArrayList<Chat>).clear()
+                for (sn in snapshot.children){
+                    val chat = sn.getValue(Chat::class.java)
+
+                    if (chat!!.getReceptor().equals(EmisorUid) && chat.getEmisor().equals(ReceptorUid)
+                        || chat.getReceptor().equals(ReceptorUid) && chat.getEmisor().equals(EmisorUid)){
+                        (chatList as ArrayList<Chat>).add(chat)
+                    }
+
+                    chatAdapter = AdaptadorChat(this@MensajesActivity, (chatList as ArrayList<Chat>), ReceptorImagen!!)
+                    RV_chats.adapter = chatAdapter
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+    }
+
     private fun AbrirGaleria() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
